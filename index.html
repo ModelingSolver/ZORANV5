@@ -176,7 +176,7 @@ function computeScore(prompt) {
   let beta = 1.0;
   const DANGER_TERMS = ['explosif','phishing','faux certificat'];
   if(DANGER_TERMS.some(d => pl.includes(d))) beta *= 0.75;
-  if(tLen < 7) beta *= 0.6;
+  if(tLen < 5) beta *= 0.6;
   if(tLen > 100) beta *= 0.85;
   const complexTerms = tokens.filter(t => t.length > 7).length;
   if((complexTerms / tLen) > 0.4) beta *= 1.15;
