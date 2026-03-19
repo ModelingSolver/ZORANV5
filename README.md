@@ -1,4 +1,4 @@
-# ZORAN 🦋 — Moteur Heuristique v5.1
+# ZORAN 🦋 — Moteur Heuristique v5.7
 
 Analyseur de prompts IA, 100% offline, zéro dépendance, un seul fichier HTML.
 
