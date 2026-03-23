@@ -1,4 +1,4 @@
-# ZORAN 🦋 — Moteur Heuristique v5.7
+# — Moteur Heuristique v5.7
 
 Analyseur de prompts IA, 100% offline, zéro dépendance, un seul fichier HTML.
 
@@ -62,4 +62,4 @@ Score : `S = (β × ΔC) / λ`
 
 ---
 
-*ZORAN 🦋 · INSTITUT IA · v5.7*
+*v5.7*
