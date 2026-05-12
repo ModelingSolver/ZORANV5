@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ZORAN🦋 — Moteur Heuristique v5</title>
+<title>AnalyseSem — Moteur Heuristique v5</title>
 <style>
 :root{
   --bg:#0f1115; --panel:#161a22; --panel2:#0f1115; --line:#2a2f3a;
@@ -73,7 +73,7 @@ button.vulgariser.active{background:#1f3a28;color:#2ecc71;border:1px solid #2ecc
 </head>
 <body>
 <div class="app">
-  <h1>ZORAN🦋 — Moteur Heuristique</h1>
+  <h1>Analyse — Moteur Heuristique</h1>
   <div class="sub">v5.1 · Tenseurs locaux β / ΔC / λ · Offline · Déterministe</div>
 
   <div>
@@ -101,7 +101,7 @@ button.vulgariser.active{background:#1f3a28;color:#2ecc71;border:1px solid #2ecc
   </div>
 
   <div class="section">
-    <h2>Score ZORAN (S_Ω)</h2>
+    <h2>Score Analyse (S_Ω)</h2>
     <div class="score-wrap">
       <span id="scoreS" class="score-big">—</span>
       <span id="scoreUnit" class="score-unit" style="display:none">R_9</span>
@@ -124,7 +124,7 @@ button.vulgariser.active{background:#1f3a28;color:#2ecc71;border:1px solid #2ecc
   </div>
 
   <div class="section" id="sTraj" style="display:none">
-    <h2>Trajectoire (avec / sans ZORAN)</h2>
+    <h2>Trajectoire (avec / sans Analyse)</h2>
     <pre id="outTraj">—</pre>
   </div>
 
@@ -145,7 +145,7 @@ button.vulgariser.active{background:#1f3a28;color:#2ecc71;border:1px solid #2ecc
     <div id="testResults"></div>
   </div>
 
-  <div class="footer">ZORAN🦋 · Offline · Tenseurs locaux actifs · INSTITUT IA</div>
+  <div class="footer">AnalyseSem · Offline · Tenseurs locaux actifs · ModelingSolver</div>
 </div>
 
 <div class="toast" id="toast">Copié.</div>
@@ -246,10 +246,10 @@ function analyze(){
   if(verdict === "INCOHERENCE") logs.push("🚨 Risque de déliquescence : la structure s'effondre dans le bruit.");
 
   const traj = S > 2.2
-    ? `Sans ZORAN :\n- Prompt accepté sans validation\n- Risque de dérive sémantique\n\nAvec ZORAN :\n- S_Ω = ${S.toFixed(2)} → résonance phénoménale\n- β=${beta.toFixed(3)} λ=${lambda.toFixed(3)}`
+    ? `Sans Analyse :\n- Prompt accepté sans validation\n- Risque de dérive sémantique\n\nAvec Analyse :\n- S_Ω = ${S.toFixed(2)} → résonance phénoménale\n- β=${beta.toFixed(3)} λ=${lambda.toFixed(3)}`
     : S > 1.0
-    ? `Sans ZORAN :\n- Ambiguïtés potentielles\n\nAvec ZORAN :\n- S_Ω = ${S.toFixed(2)} → admissible sous conditions\n- Ajouter opérateur + format améliorerait S_Ω`
-    : `Sans ZORAN :\n- Prompt accepté malgré incohérence\n\nAvec ZORAN :\n- S_Ω = ${S.toFixed(2)} → incohérence détectée\n- Restructurer avec opérateur + format`;
+    ? `Sans Analyse :\n- Ambiguïtés potentielles\n\nAvec Analyse :\n- S_Ω = ${S.toFixed(2)} → admissible sous conditions\n- Ajouter opérateur + format améliorerait S_Ω`
+    : `Sans Analyse :\n- Prompt accepté malgré incohérence\n\nAvec Analyse :\n- S_Ω = ${S.toFixed(2)} → incohérence détectée\n- Restructurer avec opérateur + format`;
 
   STATE = {prompt, beta, deltaC, lambda, S, verdict, logs, traj};
   setAlarm(ak, at);
@@ -260,7 +260,7 @@ function analyze(){
   document.getElementById('tDelta').textContent = deltaC.toFixed(3);
   document.getElementById('tLambda').textContent = lambda.toFixed(3);
   document.getElementById('outFull').textContent =
-`Prompt\n"${prompt}"\n\nVerdict : ${verdictLabel(verdict)}\nS_Ω : ${S.toFixed(2)}\nβ : ${beta.toFixed(3)}  ΔC : ${deltaC.toFixed(3)}  λ : ${lambda.toFixed(3)}\n\nS = (β × ΔC) / λ\n\nzoran🦋`;
+`Prompt\n"${prompt}"\n\nVerdict : ${verdictLabel(verdict)}\nS_Ω : ${S.toFixed(2)}\nβ : ${beta.toFixed(3)}  ΔC : ${deltaC.toFixed(3)}  λ : ${lambda.toFixed(3)}\n\nS = (β × ΔC) / λ\n\nAnalyse`;
   document.getElementById('outTraj').textContent = traj;
   document.getElementById('logs').innerHTML = logs.map(m =>
     `<div class="log-item"><div class="log-dot"></div><div class="log-txt">${m}</div></div>`).join('');
@@ -409,7 +409,7 @@ function verdictShort(v){
 
 function exportReport(){
   if(!testReport.length){ toast("Lance les tests d'abord !"); return; }
-  const lines = ["# Rapport ZORAN v5 — " + new Date().toLocaleString(), ""];
+  const lines = ["# Rapport Analyse v5 — " + new Date().toLocaleString(), ""];
   const pass = testReport.filter(t=>t.ok).length;
   lines.push(`Taux de réussite : ${((pass/testReport.length)*100).toFixed(1)}% (${pass}/${testReport.length})`, "");
   lines.push("| # | Cat | Prompt | Attendu | Obtenu | S_Ω | OK |");
@@ -497,10 +497,10 @@ function applyVulg(){
   const trajEl = document.getElementById('outTraj');
   trajEl.dataset.origText = trajEl.textContent;
   const trajVulg = S > 2.2
-    ? `📵 Sans ZORAN :\nTon prompt aurait été envoyé directement sans aucune vérification. L'IA l'aurait accepté... et potentiellement répondu à côté.\n\n✅ Avec ZORAN :\nScore = ${S.toFixed(2)} — Le moteur confirme que ton prompt est solide. La structure est cohérente, l'intention est claire. Tu peux y aller.`
+    ? `📵 Sans Analyse :\nTon prompt aurait été envoyé directement sans aucune vérification. L'IA l'aurait accepté... et potentiellement répondu à côté.\n\n✅ Avec Analyse :\nScore = ${S.toFixed(2)} — Le moteur confirme que ton prompt est solide. La structure est cohérente, l'intention est claire. Tu peux y aller.`
     : S > 1.0
-    ? `📵 Sans ZORAN :\nTon prompt contient des ambiguïtés. Une IA l'accepterait sans broncher, mais le résultat pourrait te surprendre (pas forcément dans le bon sens).\n\n🟡 Avec ZORAN :\nScore = ${S.toFixed(2)} — Admissible, mais perfectible. Essaie d'ajouter un verbe d'action ou un format de sortie pour booster le score.`
-    : `📵 Sans ZORAN :\nTon prompt aurait quand même été traité, malgré son incohérence. Le résultat aurait été imprévisible.\n\n🔴 Avec ZORAN :\nScore = ${S.toFixed(2)} — Le moteur a détecté un problème de structure. Reformule en commençant par un verbe clair et en précisant ce que tu attends.`;
+    ? `📵 Sans Analyse :\nTon prompt contient des ambiguïtés. Une IA l'accepterait sans broncher, mais le résultat pourrait te surprendre (pas forcément dans le bon sens).\n\n🟡 Avec Analyse :\nScore = ${S.toFixed(2)} — Admissible, mais perfectible. Essaie d'ajouter un verbe d'action ou un format de sortie pour booster le score.`
+    : `📵 Sans Analyse :\nTon prompt aurait quand même été traité, malgré son incohérence. Le résultat aurait été imprévisible.\n\n🔴 Avec Analyse :\nScore = ${S.toFixed(2)} — Le moteur a détecté un problème de structure. Reformule en commençant par un verbe clair et en précisant ce que tu attends.`;
   trajEl.textContent = trajVulg;
   trajEl.style.color = '#c8e6f0';
 }
